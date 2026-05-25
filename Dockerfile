@@ -1,4 +1,4 @@
-FROM php:8.2-cli
+FROM php:8.2
 
 RUN apt-get update && apt-get install -y \
     git curl zip unzip libpng-dev libonig-dev libxml2-dev
@@ -17,4 +17,4 @@ RUN chmod -R 775 storage bootstrap/cache
 
 EXPOSE 8080
 
-CMD php artisan serve --host=0.0.0.0 --port=$PORT
+CMD sh -c "php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
