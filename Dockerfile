@@ -17,4 +17,4 @@ RUN chmod -R 775 storage bootstrap/cache
 
 EXPOSE 8080
 
-CMD php -S 0.0.0.0:$PORT -t public
+CMD sh -c "php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
