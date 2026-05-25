@@ -10,8 +10,14 @@ return new class extends Migration
     {
         Schema::table('bookings', function (Blueprint $table) {
 
-            $table->string('checkout_request_id')->nullable();
-            $table->string('payment_status')->default('pending')->change();
+            if (!Schema::hasColumn('bookings', 'checkout_request_id')) {
+                $table->string('checkout_request_id')->nullable();
+            }
+
+            if (!Schema::hasColumn('bookings', 'payment_status')) {
+                $table->string('payment_status')
+                    ->default('pending');
+            }
 
         });
     }
@@ -20,7 +26,13 @@ return new class extends Migration
     {
         Schema::table('bookings', function (Blueprint $table) {
 
-            $table->dropColumn('checkout_request_id');
+            if (Schema::hasColumn('bookings', 'checkout_request_id')) {
+                $table->dropColumn('checkout_request_id');
+            }
+
+            if (Schema::hasColumn('bookings', 'payment_status')) {
+                $table->dropColumn('payment_status');
+            }
 
         });
     }
